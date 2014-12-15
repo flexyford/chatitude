@@ -34,9 +34,9 @@
 
 <script id="chat-template" type="text/x-handlebars-template">
   <div class="chat-message">
-    <p>{{ user }}</p>
-    <p>{{ message }}</p>
-    <p>{{ time }}</p>
+    <p class='user'>{{ user }}</p>
+    <p class='message'>{{ message }}</p>
+    <p class='ts'>{{ time }}</p>
   </div>
 </script>
 
@@ -58,13 +58,42 @@
       time: chat_message['time']
     });
 
-    $('.messages').append(newUserMsg)
+    var url = ""
+    if (checkURL(url = getURL(chat_message['message']))) {
+      // Add image tag after message
+      var $imgTxt = $('<img>').attr('src', url).attr('height', 40).attr('width', 40)
+      $image = $(newUserMsg).find('p').eq(1).append($imgTxt)  // Copy Existing Text and Add image Tag
+      $newUserMsg.children().eq(1).remove()                   // Remove the Previous Message Element
+      $image.insertBefore($newUserMsg.children()[1])          // Insert Message with Image
+      
+    } else {
+      $newUserMsg = $(newUserMsg)
+    }
+
+    debugger
+
+    $('.messages').append($newUserMsg)
     // Step 4: Append it to the DOM
     if (index % 2 === 0) {
       $('.messages').children().last().css('background-color', '#a4c3e1');
     } else {
       $('.messages').children().last().css('background-color', '#65a6eb');
     }
+  }
+
+  function checkURL(url) {
+    if(url)
+      return(url.match(/\.(jpeg|jpg|gif|png)$/) != null)
+    else
+      return false
+  }
+
+  function getURL(message) {
+    var res = message.match(/(http|ftp|https):\/\/([\w\-_]+(?:(?:\.[\w\-_]+)+))([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/)
+    if (res)
+      return res[0]
+    else
+      return res
   }
 
   function executeQuery() {
