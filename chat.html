@@ -6,16 +6,28 @@
   <script src="handlebars-v2.0.0.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
+  <style>
+    .columns {
+      float: left;
+      margin-right: 1em;
+    }
+  </style>
+
 </head>
 <body>
   <div class="container">
-    <div class='four columns home'>
+    <div class='col-md-4 home'>
       <h1><a href='/chat'>Chatitude!</a></h1>
+      <form>
+        <label>Message:</label>
+        <input name="message" type="text" />
+        <input type="submit" value="Submit">
+      </form>
     </div>
-    <div class='four columns messages'>
+    <div class='col-md-4 messages'>
     </div>
-    <div class='four columns sign' align='right'>
-      <a href="signin.html">Sign In</a> or <a href="signup.html">Sign Up</a>
+    <div class='col-md-4 sign'> 
+      <a href="signin.html">Sign In</a> or <a href="signup.html">Sign Up</a></br> 
     </div>
   </div>
 </body>
@@ -31,7 +43,7 @@
 <script type="text/javascript">
 
   // Define the callback function.
-  function ShowMessage(chat_message) {
+  function ShowMessage(chat_message, index) {
     // Step 1: Grab the template
     var source = $("#chat-template").html();
 
@@ -46,10 +58,13 @@
       time: chat_message['time']
     });
 
-    debugger
-
+    $('.messages').append(newUserMsg)
     // Step 4: Append it to the DOM
-    $('.four.columns.messages').append(newUserMsg);
+    if (index % 2 === 0) {
+      $('.messages').children().last().css('background-color', '#a4c3e1');
+    } else {
+      $('.messages').children().last().css('background-color', '#65a6eb');
+    }
   }
 
   function executeQuery() {
@@ -64,11 +79,37 @@
     setTimeout(executeQuery, 10000); // Currently Continue Upon Failures
   }
 
+  function postCharMessage(message) {
+    data = {}
+    data.message = message
+    data.apiToken = document.cookie.match(/apiToken=(.*);/)[1]
+
+    var url = "http://chat.api.mks.io/chats"
+
+    $.post(url, data)
+      .done(function(status) {
+        console.log("Success! Created New Message!")
+        window.location = window.location
+
+      })
+      .fail(function(error) {
+        //var errorObj = JSON.parse(error.responseText)
+        console.log("There was an error creating a new message");
+        window.location = window.location
+      })
+  }
 
 
   $(document).ready(function() {
     // run the first time; all subsequent calls will take care of themselves
-    setTimeout(executeQuery, 1000);
+    executeQuery();
+
+    $('form').submit(function(e)
+    {
+      e.preventDefault()
+      postCharMessage($( "input[name='message']" ).val())
+    });
+
   });
 
 </script>

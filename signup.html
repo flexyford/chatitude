@@ -29,19 +29,19 @@
     data = {}
     data.username = user
     data.password = pw
-    debugger
 
     var url = "http://chat.api.mks.io/signup"
 
     $.post(url, data)
       .done(function(status) {
         console.log("Success! Created New User: " + user)
-        window.location = window.location.href.replace('signup', 'chat')
+        window.location = window.location.href.replace('signup.html', '') + 'chat.html'
 
       })
       .fail(function(error) {
-        var errorObj = JSON.parse(error.responseText)
-        console.log("There was an error");        
+        //var errorObj = JSON.parse(error.responseText)
+        console.log("There was an error");
+        window.location = window.location.href.replace('signup.html', '')       
       })
   }
 

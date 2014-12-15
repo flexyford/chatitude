@@ -30,7 +30,9 @@
     }
     else { index = -1 }
     if (index == -1) {
-      document.cookie=cookie_name+"="+token;
+      cookie_name.forEach( function build_cookie(cookie, index) {
+        document.cookie=cookie+"="+token[index];
+      })
     }
   }
 
@@ -38,7 +40,6 @@
     data = {}
     data.username = user
     data.password = pw
-    debugger
 
     var url = "http://chat.api.mks.io/signin"
 
@@ -46,7 +47,7 @@
       .done(function(status) {
         console.log("Success! Signed In User - " + user + ": " + status)
         //status = JSON.parse(status)
-        putCookie("apiToken", status.apiToken)
+        putCookie(["apiToken", "username"], [status.apiToken, user])
         window.location = window.location.href.replace('signin.html', '') + 'chat.html'
       })
       .fail(function(error) {
