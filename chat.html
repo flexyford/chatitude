@@ -1,0 +1,74 @@
+<!-- chat.html -->
+<!DOCTYPE html>
+<head>
+  <title>My jQuery Page</title>
+  <script src="jquery-2.1.1.js"></script>
+  <script src="handlebars-v2.0.0.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+</head>
+<body>
+  <div class="container">
+    <div class='four columns home'>
+      <h1><a href='/chat'>Chatitude!</a></h1>
+    </div>
+    <div class='four columns messages'>
+    </div>
+    <div class='four columns sign' align='right'>
+      <a href="signin.html">Sign In</a> or <a href="signup.html">Sign Up</a>
+    </div>
+  </div>
+</body>
+
+<script id="chat-template" type="text/x-handlebars-template">
+  <div class="chat-message">
+    <p>{{ user }}</p>
+    <p>{{ message }}</p>
+    <p>{{ time }}</p>
+  </div>
+</script>
+
+<script type="text/javascript">
+
+  // Define the callback function.
+  function ShowMessage(chat_message) {
+    // Step 1: Grab the template
+    var source = $("#chat-template").html();
+
+    // Step 2: Compile the template for Handlebars
+    var template = Handlebars.compile(source);
+
+    // Step 3: Fill the template with data
+    // We use the template as a function
+    var newUserMsg = template({
+      user: chat_message['user'],
+      message: chat_message['message'],
+      time: chat_message['time']
+    });
+
+    debugger
+
+    // Step 4: Append it to the DOM
+    $('.four.columns.messages').append(newUserMsg);
+  }
+
+  function executeQuery() {
+    $.ajax({
+      type: 'GET',
+      url: 'http://chat.api.mks.io/chats'
+    }).success(function (chats) {
+      console.log("Got chats:", chats)
+      $('.chat-message').remove()
+      chats.forEach(ShowMessage);
+    });
+    setTimeout(executeQuery, 10000); // Currently Continue Upon Failures
+  }
+
+
+
+  $(document).ready(function() {
+    // run the first time; all subsequent calls will take care of themselves
+    setTimeout(executeQuery, 1000);
+  });
+
+</script>

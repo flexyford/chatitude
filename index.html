@@ -1,0 +1,17 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<head>
+  <title>My jQuery Page</title>
+</head>
+<body>
+</body>
+
+<script src="jquery-2.1.1.js"></script>
+<script type="text/javascript">
+
+  $(document).ready(function() {
+    debugger
+    window.location = window.location.href.replace('index.*$', '') + 'chat.html'
+  });
+
+</script>

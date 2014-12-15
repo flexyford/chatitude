@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<head>
+  <title>My jQuery Page</title>
+  <script src="jquery-2.1.1.js"></script>
+  <script src="handlebars-v2.0.0.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+</head>
+<body>
+
+  <div class='sixteen columns'>
+    <h3>Sign In!</h3>
+
+    <form>
+      <label>User Name:</label>
+      <input name="username" type="text" />
+      <label>Password:</label>
+      <input name="password" type="password" />
+      <input type="submit" value="Sign In">
+    </form>
+  </div>
+
+</body>
+
+<script type="text/javascript">
+
+  function putCookie(cookie_name, token) {
+    if(document.cookie != document.cookie) {
+      index = document.cookie.indexOf(cookie_name);
+    }
+    else { index = -1 }
+    if (index == -1) {
+      document.cookie=cookie_name+"="+token;
+    }
+  }
+
+  function executeSignInQuery(user, pw) {
+    data = {}
+    data.username = user
+    data.password = pw
+    debugger
+
+    var url = "http://chat.api.mks.io/signin"
+
+    $.post(url, data)
+      .done(function(status) {
+        console.log("Success! Signed In User - " + user + ": " + status)
+        //status = JSON.parse(status)
+        putCookie("apiToken", status.apiToken)
+        window.location = window.location.href.replace('signin.html', '') + 'chat.html'
+      })
+      .fail(function(error) {
+        var errorObj = JSON.parse(error.responseText)
+        console.log("There was an error: " + error)        
+      })
+  }
+
+  $(document).ready(function()
+  {
+    $('form').submit(function(e)
+    {
+      e.preventDefault()
+      executeSignInQuery($( "input[name='username']" ).val(), $( "input[name='password']" ).val())
+    });
+});
+
+</script>
