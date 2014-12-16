@@ -27,7 +27,7 @@ module Chatitude
         FROM users
         WHERE username = $1
       SQL
-      api_token = db.exec(sql, [user_data['username']]).entries.first['apiToken']
+      api_token = db.exec(sql, [user_data['username']]).entries.first
       db_password = BCrypt::Password.new(api_token)
       if db_password == user_data['password'] 
         return api_token
@@ -46,6 +46,7 @@ module Chatitude
       SQL
       db.exec(sql, [user_data['username'], api_token])
       api_token
+      return
     end
   end
 end
