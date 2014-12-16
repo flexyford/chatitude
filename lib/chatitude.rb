@@ -46,5 +46,16 @@ module Chatitude
     api2 = Chatitude::UsersRepo.signup(db, { 'username' => "Alex", 'password' => 'ford' })
     api3 = Chatitude::UsersRepo.signup(db, { 'username' => "Michael", 'password' => 'bash' })
 
+    userid1 = Chatitude::UsersRepo.get_user(db, api1 )['id']
+    userid2 = Chatitude::UsersRepo.get_user(db, api2 )['id']
+    userid3 = Chatitude::UsersRepo.get_user(db, api3 )['id']
+
+    msg1 = Chatitude::MessagesRepo.save(db, { 'message' => "Hi", 'userId' => userid1 } )
+    msg2 = Chatitude::MessagesRepo.save(db, { 'message' => "Hey", 'userId' => userid2 } )
+    msg3 = Chatitude::MessagesRepo.save(db, { 'message' => "Hello", 'userId' => userid3 } )
+
 	end
 end
+
+require_relative 'repos/user_repo'
+require_relative 'repos/messages_repo'

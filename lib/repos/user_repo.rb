@@ -17,7 +17,7 @@ module Chatitude
         FROM users
         WHERE "apiToken" = $1
       SQL
-      db.exec(sql, [apiToken]).entries.first
+      db.exec(sql, [api_token]).entries.first
     end
 
     def self.signin(db, user_data)
