@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe Chatitude::UserRepo do
+describe Chatitude::UsersRepo do
 
   def User_count
     repo.all(db).count
   end
 
-  let(:repo) { Chatitude::UserRepo }
+  let(:repo) { Chatitude::UsersRepo }
   let(:db) { Chatitude.create_db_connection('chatitude_test') }
 
   before(:each) do
     Chatitude.clear_db(db)
-    @User1 = Chatitude::UserRepo.save(db, { 'username' => "Giovanni", 'password' => 'Swordfish' })['id']
-    @User2 = Chatitude::UserRepo.save(db, { 'username' => "Leonardo", 'password' => 'Swordfish' })['id']
+    @User1 = Chatitude::UsersRepo.save(db, { 'username' => "Giovanni", 'password' => 'Swordfish' })['id']
+    @User2 = Chatitude::UsersRepo.save(db, { 'username' => "Leonardo", 'password' => 'Swordfish' })['id']
   end
 
   it "gets all Users" do

@@ -1,4 +1,5 @@
 require 'pg'
+require 'bcrypt'
 
 module Chatitude
 	def self.clear_tables(db)
@@ -40,10 +41,14 @@ module Chatitude
 	end
 
 	def self.seed_tables(db)
-    db.exec <<-SQL
-      INSERT INTO users (username, password) VALUES ('Glenn', 'password123');
-      INSERT INTO users (username, password) VALUES ('Alex', 'ford');
-      INSERT INTO users (username, password) VALUES ('Michael', 'bash');
-    SQL
+    apiToken1 = BCrypt::Password.create("password123")
+    apiToken2 = BCrypt::Password.create('ford')
+    apiToken3 = BCrypt::Password.create('bash')
+
+
+    db.exec( "INSERT INTO users (username, \"apiToken\") VALUES ('Glenn',   $1)",   [apiToken1] )
+    db.exec( "INSERT INTO users (username, \"apiToken\") VALUES ('Alex',   $1)",    [apiToken2] )
+    db.exec( "INSERT INTO users (username, \"apiToken\") VALUES ('Michael',   $1)", [apiToken3] )
+
 	end
 end
