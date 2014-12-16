@@ -11,14 +11,14 @@ module Chatitude
       db.exec(sql).entries
     end
 
-    # def self.by_id db api_token
-    #   sql = <<-SQL
-    #     SELECT id
-    #     FROM users
-    #     WHERE "apiToken" = $1
-    #   SQL
-    #   db.exec(sql, [apiToken]).entries.first
-    # end
+    def self.get_user(db, api_token)
+      sql = <<-SQL
+        SELECT id
+        FROM users
+        WHERE "apiToken" = $1
+      SQL
+      db.exec(sql, [apiToken]).entries.first
+    end
 
     def self.signin(db, user_data)
       creds = {}
