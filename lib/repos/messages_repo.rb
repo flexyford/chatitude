@@ -5,7 +5,7 @@ module MessagesRepo
 				result = db.exec("UPDATE message SET message = $2 WHERE userId = $1", [user_data['id'], user_data['message']])
 			else
 				sql = %Q[INSERT INTO messages (userId, message) VALUES ($1, $2)]
-				db.exec(sql, [user_data['id'], user_id['message']])
+				db.exec(sql, [user_data['id'], user_data['message']])
 		end
 	end
 end
