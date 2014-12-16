@@ -46,7 +46,6 @@ module Chatitude
       SQL
       db.exec(sql, [user_data['username'], api_token])
       api_token
-      return
     end
   end
 end

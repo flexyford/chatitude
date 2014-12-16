@@ -11,10 +11,10 @@ describe Chatitude::MessagesRepo do
 
   before(:each) do
     Chatitude.clear_db(db)
-    @userId = Chatitude::UsersRepo.save(db, { 'message' => "SuperShop" })['id']
+    @userId = Chatitude::UsersRepo.signup(db, { 'user' => "alex", 'password' => "swordfish" })['id']
   end
 
-  xit "gets all messages" do
+  it "gets all messages" do
     message = repo.save(db, {'message' => "Hello World",    'userId' => @userId })
     message = repo.save(db, {'message' => "Hello There",    'userId' => @userId })
     message = repo.save(db, {'message' => "Goodbye People", 'userId' => @userId })

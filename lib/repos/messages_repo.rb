@@ -18,7 +18,7 @@ module Chatitude
 				raise ("Message text cannot be blank")
 			else
 				sql = %Q[INSERT INTO messages ("userId", message) VALUES ($1, $2)]
-				db.exec(sql, [message_data['user_id'], message_data['message']])
+				db.exec(sql, [message_data['userId'], message_data['message']])
 			end
 		end
 	end
