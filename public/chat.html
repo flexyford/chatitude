@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <head>
   <title>My jQuery Page</title>
-  <script src="jquery-2.1.1.js"></script>
-  <script src="handlebars-v2.0.0.js"></script>
+  <script src="js/jquery-2.1.1.js"></script>
+  <script src="js/handlebars-v2.0.0.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
   <style>
@@ -41,6 +41,8 @@
 </script>
 
 <script type="text/javascript">
+
+  host = 'http://chat.api.mks.io'
 
   // Define the callback function.
   function ShowMessage(chat_message, index) {
@@ -97,9 +99,12 @@
   }
 
   function executeQuery() {
+
+    var url = host + "/chats"
+
     $.ajax({
       type: 'GET',
-      url: 'http://chat.api.mks.io/chats'
+      url: url
     }).success(function (chats) {
       console.log("Got chats:", chats)
       $('.chat-message').remove()
@@ -113,7 +118,7 @@
     data.message = message
     data.apiToken = document.cookie.match(/apiToken=(.*);/)[1]
 
-    var url = "http://chat.api.mks.io/chats"
+    var url = host + "/chats"
 
     $.post(url, data)
       .done(function(status) {
