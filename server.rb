@@ -23,8 +23,3 @@ end
 post '/chats' do
 
 end
-
-delete '/signout' do
-	session.clear
-end
-
