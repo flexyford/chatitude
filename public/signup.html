@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <head>
   <title>My jQuery Page</title>
-  <script src="jquery-2.1.1.js"></script>
-  <script src="handlebars-v2.0.0.js"></script>
+  <script src="js/jquery-2.1.1.js"></script>
+  <script src="js/handlebars-v2.0.0.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
 </head>
@@ -25,12 +25,14 @@
 
 <script type="text/javascript">
 
+  host = 'http://chat.api.mks.io'
+
   function executeSignUpQuery(user, pw) {
     data = {}
     data.username = user
     data.password = pw
 
-    var url = "http://chat.api.mks.io/signup"
+    var url = host + "/signup"
 
     $.post(url, data)
       .done(function(status) {

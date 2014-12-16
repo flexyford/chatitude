@@ -1,25 +1,30 @@
 require 'sinatra'
 require 'sinatra/reloader'
-require 'rest-client'
 require 'json'
 require 'pg'
+require './lib/chatitude.rb'
 
-get '/' do
-  send_file 'public/index.html'
-end
+set :bind, '0.0.0.0' # This is needed for Vagrant
 
-get '/chats' do 
+class Chatitude::Server < Sinatra::Application
 
-end
+  get '/' do
+    send_file 'public/index.html'
+  end
 
-post '/signup' do
+  get '/chats' do 
 
-end
+  end
 
-post '/signin' do
+  post '/signup' do
+    
+  end
 
-end
+  post '/signin' do
 
-post '/chats' do
+  end
 
+  post '/chats' do
+
+  end
 end
