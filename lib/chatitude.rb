@@ -1,7 +1,7 @@
 require 'pg'
 
 module Chatitude
-	def self.clear_tables
+	def self.clear_tables(db)
     db.exec <<-SQL
       DELETE FROM users;
       DELETE FROM messages;
@@ -9,7 +9,7 @@ module Chatitude
 
 	end
 
-	def self.create_tables
+	def self.create_tables(db)
     db.exec <<-SQL
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
@@ -28,18 +28,18 @@ module Chatitude
     SQL
 	end
 
-	def self.db
-    PG.connect(host: 'localhost', dbname: 'chatitude_dev')
-	end
+  def self.create_db_connection(dbname)
+    PG.connect(host: 'localhost', dbname: dbname)
+  end
 
-	def self.drop_tables 
+	def self.drop_tables(db) 
     db.exec <<-SQL
       DROP TABLE messages;
       DROP TABLE users;
     SQL
 	end
 
-	def self.seed_tables
+	def self.seed_tables(db)
     db.exec <<-SQL
       INSERT INTO users (username, password) VALUES ('Glenn', 'password123');
       INSERT INTO users (username, password) VALUES ('Alex', 'ford');

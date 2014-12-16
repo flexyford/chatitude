@@ -32,11 +32,11 @@ namespace :db do
     puts "Created tables."
   end
 
-  task :seed_db => :environment do 
+  task :seed => :environment do 
     db1 = Chatitude.create_db_connection('chatitude_dev')
     db2 = Chatitude.create_db_connection('chatitude_test')
-    Chatitude.seed_db(db1)
-    Chatitude.seed_db(db2)
+    Chatitude.seed_tables(db1)
+    Chatitude.seed_tables(db2)
     puts "Seeded Users and Messages"
   end
 
@@ -52,10 +52,8 @@ namespace :db do
     # The test db clears all the time, so there's no point in doing it here.
     db1 = Chatitude.create_db_connection('chatitude_dev')
     db2 = Chatitude.create_db_connection('chatitude_test') 
-    Chatitude.drop_tables(db1)
-    Chatitude.drop_tables(db2)
-    Chatitude.create_tables(db1)
-    Chatitude.create_tables(db2)
+    Chatitude.clear_tables(db1)
+    Chatitude.clear_tables(db2)
     puts "Cleared tables."
   end
 
