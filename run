@@ -4,4 +4,6 @@ bundle exec rake db:create_tables
 bundle exec rake db:clear
 bundle exec rake db:seed
 
-#python -m SimpleHTTPServer 8080
+#bundle exec rspec
+
+#bundle exec rackup -p 4567
