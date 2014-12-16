@@ -41,14 +41,10 @@ module Chatitude
 	end
 
 	def self.seed_tables(db)
-    apiToken1 = BCrypt::Password.create("password123")
-    apiToken2 = BCrypt::Password.create('ford')
-    apiToken3 = BCrypt::Password.create('bash')
 
-
-    db.exec( "INSERT INTO users (username, \"apiToken\") VALUES ('Glenn',   $1)",   [apiToken1] )
-    db.exec( "INSERT INTO users (username, \"apiToken\") VALUES ('Alex',   $1)",    [apiToken2] )
-    db.exec( "INSERT INTO users (username, \"apiToken\") VALUES ('Michael',   $1)", [apiToken3] )
+    api1 = Chatitude::UsersRepo.signup(db, { 'username' => "Glenn", 'password' => 'password123' })
+    api2 = Chatitude::UsersRepo.signup(db, { 'username' => "Alex", 'password' => 'ford' })
+    api3 = Chatitude::UsersRepo.signup(db, { 'username' => "Michael", 'password' => 'bash' })
 
 	end
 end
